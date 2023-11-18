@@ -46,13 +46,6 @@ int main(int argc, char* argv[])
   int p = 0;
   if(argc==2){ p = atoi(argv[1]); }
 
-  // ProductState state( true );
-  // state.set2vacuum( T );
-  // std::cout << state(1).print() << std::endl;
-
-  ProductState vac;
-  vac.set2vacuum( T );
-
   const int tmax = 24;
   std::cout << "# L = " << L << ", p = " << p << std::endl;
   for(int t=0; t<tmax; t++) std::cout << t << ' ' << epsilon_correlator( p, T, t) << std::endl;
