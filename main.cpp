@@ -12,10 +12,6 @@ const double beta_tilde = -0.5*log( tanh(beta) );
 using Complex = std::complex<double>;
 const Complex I = Complex(0.0, 1.0);
 
-using CM2 = Eigen::Matrix2cd;
-using RV2 = Eigen::Vector2d;
-using CV2 = Eigen::Vector2cd;
-
 #include "header.h"
 
 double epsilon_correlator(const int p, const TransferMatrix& T, const int t){

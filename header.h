@@ -10,6 +10,10 @@
 #include <cmath>
 #include <Eigen/Dense>
 
+using CM2 = Eigen::Matrix2cd;
+using RV2 = Eigen::Vector2d;
+using CV2 = Eigen::Vector2cd;
+
 inline int mod(const int a, const int b, const int c=0){ return ((a+c)%b+b)%b-c; }
 
 struct TransferMatrix {
@@ -433,6 +437,21 @@ struct GeneralState {
       }
     }
   }
+
+  // void a_tilde( const int k ){
+  //   const GeneralState other = *this;
+  //   a_tilde( k, other );
+  // }
+
+  // void a_tilde_dagger( const int k ){
+  //   const GeneralState other = *this;
+  //   a_tilde_dagger( k, other );
+  // }
+
+  // void epsilon_tilde( const int p ){
+  //   const ProductState other = *this;
+  //   epsilon_tilde( p, other );
+  // }
 
   void evolve( const int t, const TransferMatrix& T ) {
     for(int i=0; i<states.size(); i++) states[i].evolve(t, T);
