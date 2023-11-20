@@ -120,6 +120,9 @@ struct TransferMatrix {
   void compute_eigensystems() {
 
     // TE; 2x2
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
     for(int k=1; k<L; k++){
       CM2 Tk = E(k);
       Eigen::SelfAdjointEigenSolver< CM2 > solver(Tk);
@@ -128,6 +131,9 @@ struct TransferMatrix {
     }
 
     // TO; 2x2
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
     for(int k=1; k<L; k++){
       CM2 Tk = O(k);
       Eigen::SelfAdjointEigenSolver< CM2 > solver(Tk);
@@ -454,6 +460,9 @@ struct GeneralState {
   // }
 
   void evolve( const int t, const TransferMatrix& T ) {
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
     for(int i=0; i<states.size(); i++) states[i].evolve(t, T);
   }
 

@@ -1,6 +1,7 @@
 CXX      = g++
-CXXFLAGS = -O2 -std=c++11
+CXXFLAGS = -O3 -std=c++14 -lfftw3 -fopenmp
 INCLUDES = -I/usr/local/include
+INCLUDES += -L/usr/local/lib/
 
 
 a.out:	main.cpp header.h
