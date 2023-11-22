@@ -29,6 +29,7 @@ const int nthread = 8;
 using Complex = std::complex<double>;
 const Complex I = Complex(0.0, 1.0);
 using Idx = long unsigned int;
+using uint = unsigned int;
 
 #include "header.h"
 
