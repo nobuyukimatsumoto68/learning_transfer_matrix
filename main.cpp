@@ -15,11 +15,14 @@ int omp_get_num_threads() { return 1; }
 int omp_get_max_threads() { return 1; }
 #endif
 
-const int L=100;
+const int L=128;
+const int tmax = 128;
+std::string desc = "L"+std::to_string(L)+"_T"+std::to_string(tmax);
+const std::string pcorr = "./data/fourier_"+desc+".dat";
+const std::string xcorr = "./data/spatial_"+desc+".dat";
+
 const double beta = atanh(sqrt(2.0)-1.0);
 const double beta_tilde = -0.5*log( tanh(beta) );
-
-const int tmax = 40;
 
 const int nthread = 8;
 
@@ -103,10 +106,6 @@ int main(int argc, char* argv[])
   omp_set_num_threads(nthread);
 #endif
 
-  // main part
-  int p = 0;
-  if(argc==2){ p = atoi(argv[1]); }
-
   Complex corr_tilde[tmax][L];
   double corr[tmax][L];
 
@@ -118,11 +117,8 @@ int main(int argc, char* argv[])
     FFT2real(L, corr_tilde[t], corr[t]);
   }
 
-  for(int t=0; t<tmax; t++){
-    for(int x=0; x<L; x++){ std::cout << corr[t][x] << " "; }
-    std::cout << std::endl;
-  }
-
+  write2file2d<tmax, L>( corr_tilde, pcorr, "t\tk\tcorr (Re,Im)" );
+  write2file2d<tmax, L>( corr, xcorr, "t\tx\tcorr" );
 
   return 0;
 }

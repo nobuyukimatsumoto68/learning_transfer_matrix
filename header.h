@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <complex>
 #include <sstream>
+#include <fstream>
 #include <vector>
 #include <cassert>
 #include <initializer_list>
@@ -444,6 +445,50 @@ struct GeneralState {
     }
   }
 
+
+
+  // void sigma( const int x, const ProductState& state ){
+  //   states.clear();
+  //   coeffs.clear();
+
+  //   for(int k=-L+1; k<=L-1; k+=2){
+  //     {
+  //       ProductState tmp = state;
+  //       tmp.a_tilde(2.0*p-k);
+  //       tmp.a_tilde(k);
+  //       const double mom_phys = M_PI*(2.0*p-k)/L;
+  //       states.push_back( tmp );
+  //       coeffs.push_back( exp(-I*mom_phys) );
+  //     }
+  //     {
+  //       ProductState tmp = state;
+  //       tmp.a_tilde_dagger(-2.0*p+k);
+  //       tmp.a_tilde(k);
+  //       const double mom_phys = M_PI*(2.0*p-k)/L;
+  //       states.push_back( tmp );
+  //       coeffs.push_back( exp(-I*mom_phys) );
+  //     }
+  //     {
+  //       ProductState tmp = state;
+  //       tmp.a_tilde(2.0*p+k);
+  //       tmp.a_tilde_dagger(k);
+  //       const double mom_phys = M_PI*(2.0*p+k)/L;
+  //       states.push_back( tmp );
+  //       coeffs.push_back( -exp(-I*mom_phys) );
+  //     }
+  //     {
+  //       ProductState tmp = state;
+  //       tmp.a_tilde_dagger(-2.0*p-k);
+  //       tmp.a_tilde_dagger(k);
+  //       const double mom_phys = M_PI*(2.0*p+k)/L;
+  //       states.push_back( tmp );
+  //       coeffs.push_back( -exp(-I*mom_phys) );
+  //     }
+  //   }
+  // }
+
+
+
   // void a_tilde( const int k ){
   //   const GeneralState other = *this;
   //   a_tilde( k, other );
@@ -484,3 +529,31 @@ struct GeneralState {
   Complex squared_norm() const { return dot( *this ); }
 
 };
+
+
+
+template <int X, int Y>
+void write2file2d( const double obj[X][Y], const std::string& filename, const std::string& memo="" ){
+  std::ofstream ofs(filename);
+  ofs << std::scientific << std::setprecision(15);
+  ofs << "# " << memo << std::endl;
+  for(int x=0; x<X; x++){
+    for(int y=0; y<Y; y++) {
+      ofs << x << '\t' << y << '\t' << obj[x][y] << std::endl;
+    }
+  }
+}
+
+template <int X, int Y>
+void write2file2d( const Complex obj[X][Y], const std::string& filename, const std::string& memo="" ){
+  std::ofstream ofs(filename);
+  ofs << std::scientific << std::setprecision(15);
+  ofs << "# " << memo << std::endl;
+  for(int x=0; x<X; x++){
+    for(int y=0; y<Y; y++) {
+      ofs << x << '\t' << y << '\t' << obj[x][y].real() << '\t' << obj[x][y].imag() << std::endl;
+    }
+  }
+}
+
+
